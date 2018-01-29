@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<!--[if lte IE 6]><html class="preIE7 preIE8 preIE9"><![endif]-->
+<!--[if IE 7]><html class="preIE8 preIE9"><![endif]-->
+<!--[if IE 8]><html class="preIE9"><![endif]-->
+<!--[if gte IE 9]><!-->
+<html>
+<!--<![endif]-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>drangus</title>
+
+    <!-- ===================================   
+   
+                    Javascript
+   
+     ===================================!-->
+
+    <script>
+        if (typeof console == "undefined") {
+            window.console = {
+                log: function() {}
+            };
+        }
+
+        var prevScrollHandler = undefined;
+        //function adds class to header after scrolling past hero in order make header appear 
+        function setScrollEventListener(init) {
+            var shrinkOn = document.getElementById("hero").offsetHeight - 40,
+                header = document.getElementById("headerid"),
+                navFixed = (window.pageYOffset > shrinkOn) ? true : false;
+
+            var scrollHandler = function(event) {
+                var scrollPos = event.target.scrollingElement.scrollTop;
+                // set navFixed
+                if (scrollPos > shrinkOn && !navFixed) {
+                    navFixed = true;
+                } else if (scrollPos < shrinkOn && navFixed) {
+                    navFixed = false;
+                } else {}
+                if (navFixed) {
+                    if (!(header.classList.contains("smaller"))) {
+                        header.classList.add("smaller");
+                    } else {}
+                } else {
+                    if (header.classList.contains("smaller")) {
+                        header.classList.remove("smaller");
+                    } else {}
+                }
+            };
+            if (!init && prevScrollHandler) {
+                window.document.removeEventListener('scroll', prevScrollHandler);
+            }
+            window.document.addEventListener('scroll', scrollHandler);
+            prevScrollHandler = scrollHandler;
+        }
+        //toggle mobile menu function
+        function toggleActive() {
+            var toggleButton = document.getElementById("toggle-button");
+            if (toggleButton.classList.contains("active")) {
+                document.ontouchmove = function(e) {
+                    return true;
+                }
+                document.querySelector("#overlay").removeEventListener("click", toggleActive);
+            } else {
+                document.ontouchmove = function(e) {
+                    e.preventDefault();
+                }
+                document.querySelector("#overlay").addEventListener("click", toggleActive);
+            }
+            document.querySelector("#toggle-button").classList.toggle("active");
+            document.querySelector("#off-canvas-menu").classList.toggle("active");
+            document.querySelector("#headerid").classList.toggle("active");
+            document.querySelector("#overlay").classList.toggle("active");
+            document.querySelector(".page-wrapper").classList.toggle("active");
+            document.querySelector("#body").classList.toggle("active");
+        };
+
+        //fix height function for vh height divs intended to prevent page jumps on mobile devices 
+        function fixAllHeights() {
+            var divs = document.getElementsByClassName('mobile-height-fix');
+            for (var i = 0; i < divs.length; i++) {
+                var divHeight = divs[i].offsetHeight;
+                divs[i].style.height = divHeight.toString() + 'px';
+            }
+        };
+
+        window.onload = function initFunc() {
+            //check if in mobile browser 
+            if (typeof window.orientation !== 'undefined') {
+                fixAllHeights();
+            }
+
+            document.querySelector("#toggle-button").addEventListener("click", toggleActive);
+            //close mobile menu
+            if (document.documentElement.offsetWidth > 950) {
+                setScrollEventListener(true);
+            }
+        };
+
+        window.onresize = function resizeFunc() {
+            if (document.documentElement.offsetWidth > 950 &&
+                document.querySelector("#off-canvas-menu").classList.contains('active')) {
+                toggleActive();
+            }
+            if (document.documentElement.offsetWidth > 950) {
+                setScrollEventListener(false);
+            }
+
+        };
+
+
+
+        // ===== Scroll to Top ==== 
+        $(window).scroll(function() {
+            if ($(this).scrollTop() >= 50) { // If page is scrolled more than 50px
+                $('#top').fadeIn("fast"); // Fade in the arrow
+            } else {
+                $('#top').fadeOut("fast"); // Else fade out the arrow
+            }
+        });
+        $('#top').click(function() { // When arrow is clicked
+            $('body,html').animate({
+                scrollTop: 0 // Scroll to top of body
+            }, 500);
+        });
+    </script>
+
+
+
+    <!-- ===================================   
+   
+                    CSS
+   
+     ===================================!-->
+
+    <link rel="stylesheet" href="/css/stylesheet.css" type="text/css">
+
+</head>
+
+<body>
+    <header id="headerid" class="site-header">
+        <div class="container clearfix">
+            <a href="index.html">
+                <h1 id="logo">DRANGUS</h1>
+            </a>
+            <nav>
+                <a href="listen.html">Listen</a>
+                <a href="video.html">Video</a>
+                <a href="photos.html">Photos</a>
+                <a href="merch.html" class="active">Merch</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+    <!-- /header -->
+    <div id="toggle-button" class="button_container toggle-animation">
+        <span class="top"></span>
+        <span class="middle"></span>
+        <span class="bottom"></span>
+    </div>
+    <div class="page-wrapper site">
+
+
+        <!-- Primary Page Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+        <main class="site-content">
+            <section id="hero" class="index-hero mobile-height-fix">
+                <div class="hero-container">
+                    <h4 class="hero-heading">Drangus</h4>
+                </div>
+            </section>
+            <section class="index-one-only">
+                <div class="container1">
+
+                    <div class="big-emotion">:(
+
+                    </div>
+                    <div class="sad-face">Sad face.</div>
+
+                    <div class="content-description">I have not started working on this page yet, please come back soon.
+                    </div>
+                    <div class="further-explanation">We sincerely hope you understand!
+                    </div>
+
+                </div>
+            </section>
+        </main>
+        <footer class="site-footer">
+            <p class="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /><br>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a></p>
+            <br>
+            <p class="copyright">Copyright © 2018 Drangus</p>
+        </footer>
+
+    </div>
+
+    <div id="off-canvas-menu">
+        <nav>
+            <ul>
+                <li><a href="listen.html">Listen</a></li>
+                <li><a href="video.html">Video</a></li>
+                <li><a href="photos.html">Photos</a></li>
+                <li><a href="merch.html">Merch</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="overlay" class="overlay"> </div>
+    <nav class="share">
+
+
+        <a href="#" class="buttons"></a>
+
+        <a href="#" class="buttons"></a>
+
+        <a class="buttons" href="#"></a>
+
+    </nav>
+
+</body>
+
+</html>
